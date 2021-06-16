@@ -1,0 +1,53 @@
+{
+  "name": "write-file",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "npm run clean && tsc --project tsconfig.json",
+    "release": "ncc build src/write-file.ts -o action && git add -f action/",
+    "clean": "rimraf -- action",
+    "lint": "eslint **/*.ts"
+  },
+  "keywords": [
+    "actions",
+    "github",
+    "write",
+    "file"
+  ],
+  "author": {
+    "name": "Giao Ho",
+    "email": "joutvhu@gmail.com",
+    "url": "https://github.com/joutvhu"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/joutvhu/write-file#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joutvhu/write-file.git"
+  },
+  "bugs": {
+    "url": "https://github.com/joutvhu/write-file/issues"
+  },
+  "dependencies": {
+    "@actions/core": "^1.4.0",
+    "@actions/io": "^1.1.1",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@tsconfig/recommended": "^1.0.1",
+    "@types/node": "^15.12.2",
+    "@typescript-eslint/eslint-plugin": "^4.27.0",
+    "@typescript-eslint/parser": "^4.27.0",
+    "@vercel/ncc": "^0.28.6",
+    "eslint": "^7.28.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jest": "^24.3.6",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "jest": "^27.0.4",
+    "prettier": "^2.3.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.3.2"
+  }
+}
