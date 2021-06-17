@@ -19,7 +19,7 @@ See [action.yml](action.yml)
 
 - `encoding`  **Optional** Encoding of the contents.
 
-## Example usage
+## Example
 
 ```yaml
 steps:
@@ -28,5 +28,5 @@ steps:
       path: './secret-key.gpg'
       contents: ${{ secrets.GPG_SECRET_KEY }}
       write_mode: overwrite
-      encoding: 'base64'
+      encoding: base64
 ```
