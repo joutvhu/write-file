@@ -1100,7 +1100,7 @@ var __webpack_exports__ = {};
 __nccwpck_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/.pnpm/@actions+core@1.4.0/node_modules/@actions/core/lib/core.js
-var lib_core = __nccwpck_require__(149);
+var core = __nccwpck_require__(149);
 // EXTERNAL MODULE: ./node_modules/.pnpm/@actions+io@1.1.1/node_modules/@actions/io/lib/io.js
 var io = __nccwpck_require__(449);
 // EXTERNAL MODULE: external "fs"
@@ -1115,24 +1115,26 @@ var Inputs;
     Inputs["WriteMode"] = "write_mode";
     Inputs["Encoding"] = "encoding";
 })(Inputs || (Inputs = {}));
-var constants_Outputs;
+var Outputs;
 (function (Outputs) {
     Outputs["Size"] = "size";
-})(constants_Outputs || (constants_Outputs = {}));
+})(Outputs || (Outputs = {}));
 
 ;// CONCATENATED MODULE: ./src/io-helper.ts
 
 
+
 function getInputs() {
     const result = {};
-    result.path = lib_core.getInput(Inputs.Path, { required: true });
-    result.contents = lib_core.getInput(Inputs.Contents, { required: true });
-    result.writeMode = lib_core.getInput(Inputs.WriteMode, { required: true });
+    result.path = core.getInput(Inputs.Path, { required: true });
+    result.path = (0,external_path_.resolve)(result.path);
+    result.contents = core.getInput(Inputs.Contents, { required: true });
+    result.writeMode = core.getInput(Inputs.WriteMode, { required: true });
     if (typeof result.writeMode === 'string')
         result.writeMode = result.writeMode.toLocaleLowerCase();
     if (!['append', 'overwrite', 'preserve'].includes(result.writeMode))
         result.writeMode = 'overwrite';
-    result.encoding = lib_core.getInput(Inputs.Encoding, { required: false });
+    result.encoding = core.getInput(Inputs.Encoding, { required: false });
     if (typeof result.encoding === 'string')
         result.encoding = result.encoding.toLocaleLowerCase();
     if (!['ascii', 'utf8', 'utf-8', 'utf16le', 'ucs2', 'ucs-2', 'base64', 'base64url', 'latin1', 'binary', 'hex'].includes(result.encoding))
@@ -1167,7 +1169,7 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
         try {
             const inputs = getInputs();
             if (inputs.writeMode !== 'preserve' || !(0,external_fs_.existsSync)(inputs.path)) {
-                lib_core.info(`Writing ${inputs.path} file.`);
+                core.info(`Writing ${inputs.path} file.`);
                 const targetDir = (0,external_path_.dirname)(inputs.path);
                 yield (0,io.mkdirP)(targetDir);
                 if (inputs.writeMode === 'overwrite') {
@@ -1176,16 +1178,16 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
                 else {
                     (0,external_fs_.appendFileSync)(inputs.path, inputs.contents, inputs.options);
                 }
-                lib_core.info(`Write ${inputs.path} file successfully.`);
+                core.info(`Write ${inputs.path} file successfully.`);
             }
             else {
-                lib_core.info(`The ${inputs.path} file is exists.`);
+                core.info(`The ${inputs.path} file is exists.`);
             }
-            const statResult = (0,external_fs_.statSync)(inputs.path);
-            statResult.size;
+            const result = (0,external_fs_.statSync)(inputs.path);
+            setOutputs(result);
         }
         catch (err) {
-            lib_core.setFailed(err.message);
+            core.setFailed(err.message);
         }
     });
 })();
