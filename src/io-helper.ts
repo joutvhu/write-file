@@ -1,11 +1,13 @@
 import * as core from '@actions/core';
-import {Inputs} from './constants';
+import {Inputs, Outputs} from './constants';
+import {Stats, WriteFileOptions} from 'fs';
 
 export interface WriteFileInputs {
     path: string;
     contents: string;
-    mode: string;
+    writeMode: string;
     encoding: string;
+    options: WriteFileOptions;
 }
 
 /**
@@ -18,13 +20,26 @@ export function getInputs(): WriteFileInputs {
 
     result.contents = core.getInput(Inputs.Contents, {required: true});
 
-    result.mode = core.getInput(Inputs.Mode, {required: true});
-    if (!['append', 'overwrite', 'preserve'].includes(result.mode))
-        result.mode = 'overwrite';
+    result.writeMode = core.getInput(Inputs.WriteMode, {required: true});
+    if (typeof result.writeMode === 'string')
+        result.writeMode = result.writeMode.toLocaleLowerCase();
+    if (!['append', 'overwrite', 'preserve'].includes(result.writeMode))
+        result.writeMode = 'overwrite';
 
     result.encoding = core.getInput(Inputs.Encoding, {required: false});
+    if (typeof result.encoding === 'string')
+        result.encoding = result.encoding.toLocaleLowerCase();
     if (!['ascii', 'utf8', 'utf-8', 'utf16le', 'ucs2', 'ucs-2', 'base64', 'base64url', 'latin1', 'binary', 'hex'].includes(result.encoding))
-        delete result.encoding;
+        result.encoding = 'utf8';
+
+    result.options = {
+        encoding: result.encoding
+    };
 
     return result;
+}
+
+export function setOutputs(response: Stats) {
+    core.setOutput(Outputs.Size, response.size);
+    core.debug('Outputs: size: ' + response.size);
 }

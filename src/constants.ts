@@ -1,7 +1,7 @@
 export enum Inputs {
     Path = 'path',
     Contents = 'contents',
-    Mode = 'mode',
+    WriteMode = 'write_mode',
     Encoding = 'encoding'
 }
 
