@@ -39,7 +39,7 @@ export function getInputs(): WriteFileInputs {
     return result;
 }
 
-export function setOutputs(response: Stats) {
+export function setOutputs(response: Stats): void {
     core.setOutput(Outputs.Size, response.size);
     core.debug('Outputs: size: ' + response.size);
 }
