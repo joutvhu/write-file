@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
-import {Inputs, Outputs} from './constants';
 import {Stats, WriteFileOptions} from 'fs';
+import {resolve} from 'path';
+import {Inputs, Outputs} from './constants';
 
 export interface WriteFileInputs {
     path: string;
@@ -17,6 +18,7 @@ export function getInputs(): WriteFileInputs {
     const result: WriteFileInputs | any = {};
 
     result.path = core.getInput(Inputs.Path, {required: true});
+    result.path = resolve(result.path);
 
     result.contents = core.getInput(Inputs.Contents, {required: true});
 

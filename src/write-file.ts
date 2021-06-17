@@ -2,7 +2,7 @@ import * as core from '@actions/core';
 import {mkdirP} from '@actions/io';
 import {appendFileSync, existsSync, Stats, statSync, writeFileSync} from 'fs';
 import {dirname} from 'path';
-import {getInputs, WriteFileInputs} from './io-helper';
+import {getInputs, setOutputs, WriteFileInputs} from './io-helper';
 
 (async function run() {
     try {
@@ -25,8 +25,8 @@ import {getInputs, WriteFileInputs} from './io-helper';
             core.info(`The ${inputs.path} file is exists.`);
         }
 
-        const statResult: Stats = statSync(inputs.path);
-        statResult.size
+        const result: Stats = statSync(inputs.path);
+        setOutputs(result);
     } catch (err) {
         core.setFailed(err.message);
     }
