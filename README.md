@@ -25,7 +25,7 @@ See [action.yml](action.yml)
 steps:
   - uses: joutvhu/write-file@v1
     with:
-      path: './secret-key.gpg'
+      path: secret-key.gpg
       contents: ${{ secrets.GPG_SECRET_KEY }}
       write_mode: overwrite
       encoding: base64
