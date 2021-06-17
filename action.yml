@@ -1,0 +1,29 @@
+name: Write Secret File
+description: Write a file
+author: Giao Ho
+inputs:
+  path:
+    description: The path to the file to write.
+    required: true
+  contents:
+    description: The contents of the file
+    required: true
+  write_mode:
+    # Default: overwrite
+    description: 'The mode of writing to use: `overwrite`, `append`, or `preserve`.'
+    required: false
+    default: 'overwrite'
+  encoding:
+    # Default: utf8
+    description: Encoding
+    required: false
+    default: 'utf8'
+outputs:
+  size:
+    description: Size of the file
+runs:
+  using: node12
+  main: action/index.js
+branding:
+  icon: file-plus
+  color: gray-dark
