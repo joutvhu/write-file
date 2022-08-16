@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import {Stats, WriteFileOptions} from 'fs';
-import {resolve} from 'path';
+import {homedir} from 'os';
+import {join, resolve} from 'path';
 import {Inputs, Outputs} from './constants';
 
 export interface WriteFileInputs {
@@ -17,8 +18,16 @@ export interface WriteFileInputs {
 export function getInputs(): WriteFileInputs {
     const result: WriteFileInputs | any = {};
 
-    result.path = core.getInput(Inputs.Path, {required: true});
-    result.path = resolve(result.path);
+    let filePath = core.getInput(Inputs.Path, {required: true});
+    if (filePath == null) {
+        throw new Error('You must provide either \'path\' in your configuration.');
+    } else {
+        if (filePath.startsWith('~/') || filePath.startsWith('~\\'))
+            filePath = join(homedir(), filePath.slice(1));
+        else if (filePath === '~')
+            filePath = homedir();
+        result.path = resolve(process.cwd(), filePath);
+    }
 
     result.contents = core.getInput(Inputs.Contents, {required: true});
 
