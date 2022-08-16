@@ -27,7 +27,7 @@ import {getInputs, setOutputs, WriteFileInputs} from './io-helper';
 
         const result: Stats = statSync(inputs.path);
         setOutputs(result);
-    } catch (err) {
-        core.setFailed(err.message);
+    } catch (err: any) {
+        core.setFailed(err?.message ?? err);
     }
 })();
